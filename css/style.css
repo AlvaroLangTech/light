@@ -20,21 +20,24 @@
   --line-2:#D7DBE3;
 
   /* medidas (Figma) */
-  --topbar-h:68px;      /* altura da topbar */
-  --sidebar-w:256px;    /* largura da sidebar */
+  --topbar-h:68px;
+  --sidebar-w:256px;
   --input-h:38px;
   --container:1100px;
 
-/* layout helpers para topbar */
---topbar-pad-x: 20px;                 /* padding horizontal da .topbar-inner */
---gutter-offset: 0px;                 /* ajuste fino (0–1px se precisar) */
---gutter: calc(
-  var(--sidebar-w) + 12px             /* 256 + 12 = 268 do Figma */
-  - var(--topbar-pad-x)               /* menos o padding-left (20) da .topbar-inner */
-  + var(--gutter-offset)              /* micro ajuste opcional */
-);
---chev-size: 24px;                    /* tamanho real do chevron */
---chev-gap: 16px;                     /* folga do input depois do chevron */
+  /* layout helpers para topbar */
+  --topbar-pad-x: 20px;                 /* padding horizontal da .topbar-inner */
+  --gutter-offset: 0px;                 /* ajuste fino (0–1px se precisar) */
+  --gutter: calc(
+    var(--sidebar-w) + 12px             /* 256 + 12 = 268 do Figma */
+    - var(--topbar-pad-x)               /* menos o padding-left (20) da .topbar-inner */
+    + var(--gutter-offset)              /* micro ajuste opcional */
+  );
+  --chev-size: 24px;                    /* tamanho real do chevron */
+  --chev-gap: 80px;                     /* folga do input depois do chevron */
+
+  /* NOVO: largura máxima da busca (valor do Figma) */
+  --search-max: 678px;                 /* ajuste aqui se no Figma estiver 1288/1292 etc. */
 
   /* raio/sombra */
   --radius:10px;
@@ -96,7 +99,7 @@ header.topbar{
   transform:translateZ(0);
 }
 
-/* CHEVRON: sem translate(-50%), centro cai na régua */
+/* CHEVRON: centro exatamente na régua */
 .topbar-toggle{
   position:absolute;
   left: calc(var(--gutter) - (var(--chev-size) / 2));  /* centro na régua */
@@ -114,12 +117,14 @@ header.topbar{
 .topbar-toggle:focus-visible{outline:3px solid rgba(255,255,255,.45);outline-offset:2px}
 .topbar-toggle svg{width:14px;height:14px;color:#fff}
 
-/* Input começa após o chevron (12px raio + 16px gap = 28px) */
+/* Busca começa após o chevron (12px de raio + 16px de gap = 28px) */
+/* E agora tem largura máxima controlada por --search-max */
 .topbar-search{
   flex:1; display:flex;
   margin-left: calc((var(--chev-size) / 2) + var(--chev-gap)); /* 28px íntegros */
+  max-width: var(--search-max);
 }
-.topbar-search .search-wrap{width:min(1160px,100%); position:relative}
+.topbar-search .search-wrap{width:100%; position:relative}
 .topbar-search input{
   width:100%; height:40px; border-radius:999px; background:#fff;
   border:1px solid rgba(255,255,255,.12);
@@ -136,12 +141,11 @@ header.topbar{
   width:15px; height:15px; color:#575756; pointer-events:none;
 }
 
-/* Ações à direita (inalterado) */
-.topbar-actions{margin-left:auto;display:flex;align-items:center;gap:16px}
-
-
 /* Ações à direita */
-.topbar-actions{margin-left:auto;display:flex;align-items:center;gap:16px}
+.topbar-actions{
+  margin-left:auto; display:flex; align-items:center; gap:16px;
+  flex-shrink:0; /* evita comprimir ícones quando a busca está no limite */
+}
 .notif{position:relative;width:40px;height:40px;border-radius:8px;display:grid;place-items:center}
 .notif svg{width:22px;height:22px;color:#fff;opacity:.95}
 .notif .notif__badge{
@@ -250,6 +254,12 @@ tbody tr:hover{background:#FAFBFF}
 /* ============================================================
    📱 RESPONSIVO
    ============================================================ */
+/* Quando a viewport não comportar a largura do Figma,
+   a busca vira fluída automaticamente */
+@media (max-width: 1400px){
+  :root{ --search-max: 100%; }
+}
+
 @media (max-width:1200px){.filters{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:1024px){
   .sidebar{position:static;width:auto;height:auto;margin:0}
