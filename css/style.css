@@ -8,8 +8,8 @@
   --surface-2:#F3F5F8;
 
   /* brand */
-  --top:#009A93;      /* topbar */
-  --side:#0D5452;     /* sidebar */
+  --top:#009A93;        /* topbar */
+  --side:#0D5452;       /* sidebar */
   --accent:#F7A941;
 
   /* texto/linhas */
@@ -19,9 +19,9 @@
   --line:#E5E7EB;
   --line-2:#D7DBE3;
 
-  /* medidas (alinhadas ao HTML) */
-  --topbar-h:56px;                 /* igual ao h-14 do HTML */
-  --sidebar-w:256px;               /* Figma: 256px */
+  /* medidas (Figma) */
+  --topbar-h:68px;      /* altura da topbar */
+  --sidebar-w:256px;    /* largura da sidebar */
   --input-h:38px;
   --container:1100px;
 
@@ -40,7 +40,6 @@
    ============================================================ */
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
-html{color-scheme:light}
 body{
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
@@ -54,48 +53,66 @@ button{background:none;border:0;cursor:pointer}
 .h1{font-size:1.25rem;line-height:1.4;color:var(--heading);font-weight:700}
 
 /* ============================================================
-   ⬆️ TOPBAR — fiel ao Figma
+   ⬆️ TOPBAR — idêntica ao Figma
    ============================================================ */
 header.topbar{
   position:sticky; top:0; z-index:50;
   background:var(--top); color:#fff;
   box-shadow:inset 0 -1px 0 rgba(0,0,0,.08);
 }
+
+/* Precisamos de position:relative para ancorar logo/régua/chevron */
 .topbar-inner{
+  position:relative;
   height:var(--topbar-h);
   display:flex; align-items:center; gap:16px;
   width:100%;
-  padding:0 20px; /* sem offset; logo colada à esquerda */
+  /* 268px (gutter da régua) + 24px de respiro antes da busca */
+  padding:0 20px 0 calc(268px + 24px);
 }
 
-/* Logo (só a marca) */
-.topbar-brand{display:flex;align-items:center;color:#fff;text-decoration:none}
+/* LOGO — tamanho exato e fixada a 30px da esquerda */
+.topbar-brand{
+  position:absolute; left:30px; top:50%; transform:translateY(-50%);
+  line-height:0; display:block;
+}
 .topbar-brand img{
-  height:40px;              /* segura dentro da barra */
-  width:auto;               /* mantém proporção da logo */
+  width:120.66px;
+  height:58.78px;
+  object-fit:contain;
   image-rendering:-webkit-optimize-contrast;
 }
 
-/* Chevron 24x24 entre logo e busca */
+/* RÉGUA vertical na posição exata (x=268px) e altura 68px */
+.topbar-ruler{
+  position:absolute; left:268px; top:0;
+  width:1px; height:var(--topbar-h);
+  background:rgba(255,255,255,.35);
+}
+
+/* Chevron (24×24) CENTRALIZADO na régua */
 .topbar-toggle{
+  position:absolute; left:268px; top:50%;
+  transform:translate(-50%,-50%);
   width:24px; height:24px; border-radius:999px;
   background:#0D5452; border:1px solid rgba(255,255,255,.30);
-  display:grid; place-items:center; margin-left:12px; margin-right:12px;
+  display:grid; place-items:center;
   box-shadow:0 1px 1px rgba(0,0,0,.08) inset;
   transition:transform .12s ease, background .12s ease, border-color .12s ease;
 }
 .topbar-toggle svg{width:14px;height:14px;color:#fff}
 .topbar-toggle:hover{background:#0f6663;border-color:rgba(255,255,255,.45)}
-.topbar-toggle:active{transform:scale(.98)}
+.topbar-toggle:active{transform:translate(-50%,-50%) scale(.98)}
 .topbar-toggle:focus-visible{outline:3px solid rgba(255,255,255,.45);outline-offset:2px}
 
-/* Busca “pílula” central */
+/* Busca “pílula” central — largura máx 1160px */
 .topbar-search{flex:1;display:flex;justify-content:center}
 .topbar-search .search-wrap{width:min(1160px,100%);position:relative}
 .topbar-search input{
-  width:100%;height:40px;border-radius:999px;background:#fff;
+  width:100%; height:40px; border-radius:999px; background:#fff;
   border:1px solid rgba(255,255,255,.12);
-  padding:0 14px 0 44px;color:var(--text);outline:none;box-shadow:none;
+  padding:0 44px 0 14px;  /* espaço para a lupa à direita */
+  color:var(--text); outline:none; box-shadow:none;
 }
 .topbar-search input[type="search"]{-webkit-appearance:none;appearance:none}
 .topbar-search input::-webkit-search-decoration,
@@ -103,9 +120,11 @@ header.topbar{
 .topbar-search input::-webkit-search-results-button,
 .topbar-search input::-webkit-search-results-decoration{display:none}
 .topbar-search input::placeholder{color:#8a95a6}
-.topbar-search svg{
-  position:absolute;left:14px;top:50%;transform:translateY(-50%);
-  width:18px;height:18px;color:#64748B;pointer-events:none;
+
+/* Lupa à DIREITA (15×15) a 12px da borda */
+.topbar-search .search-icon{
+  position:absolute; right:12px; top:50%; transform:translateY(-50%);
+  width:15px; height:15px; color:#575756; pointer-events:none;
 }
 
 /* Ações à direita */
@@ -135,7 +154,7 @@ header.topbar{
   will-change:transform;
 }
 
-/* (Se existir alguma grid externa, não reservar coluna) */
+/* Em desktop, a grid do app não reserva coluna p/ a sidebar */
 @media (min-width:1025px){
   body > .relative > .grid{grid-template-columns:minmax(0,1fr)!important}
   body > .relative > .grid > main{margin-left:var(--sidebar-w)}
@@ -183,7 +202,7 @@ thead th{
 tbody td{padding:12px 14px;border-bottom:1px solid #EEF2F6;vertical-align:middle}
 tbody tr:hover{background:#FAFBFF}
 
-/* Badges (status) */
+/* Badges */
 .badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:11px;border:1px solid transparent}
 .badge--ativo{background:#E9FBF5;color:#0A7E55;border-color:#B9F3DF}
 .badge--rascunho{background:#FFF7D6;color:#8A6D00;border-color:#F4E2A1}
@@ -201,7 +220,7 @@ tbody tr:hover{background:#FAFBFF}
 .pagination .pages{display:flex;align-items:center;gap:8px}
 .page-btn{
   min-width:36px;height:36px;padding:0 12px;border:1px solid var(--line);
-  border-radius:10px;background:#fff;font-size:12px;color:#var(--text);
+  border-radius:10px;background:#fff;font-size:12px;color:var(--text);
   display:inline-grid;place-items:center;
 }
 .page-btn.is-current{background:#111827;color:#fff;border-color:#111827}
@@ -211,16 +230,17 @@ tbody tr:hover{background:#FAFBFF}
 .pagination .ellipsis{padding:0 4px;color:#6B7280}
 .pagination .chev{font-weight:700}
 
-/* Rodapé institucional */
+/* Rodapé */
 .site-footer{margin-top:16px;border-top:1px solid var(--line);background:#fff}
 .site-footer__inner{max-width:var(--container);margin:0 auto;padding:10px 18px;font-size:11.5px;color:#6B7280;text-align:left}
 
 /* ============================================================
-   📱 RESPONSIVO (refinaremos depois)
+   📱 RESPONSIVO (refino depois)
    ============================================================ */
 @media (max-width:1200px){.filters{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:1024px){
   .sidebar{position:static;width:auto;height:auto;margin:0}
+  body > .relative > .grid > main{margin-left:0}
   .topbar-inner{padding:0 20px}
 }
 @media (max-width:640px){

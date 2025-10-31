@@ -17,49 +17,50 @@
 <body class="min-h-screen bg-[var(--bg)] text-[var(--text)] antialiased">
 
   <!-- ========== TOPBAR ========== -->
-  <header class="topbar w-full bg-[var(--top)] text-white">
-    <div class="topbar-inner">
-      <!-- Logo (sem “Admin Center” ao lado) -->
-      <a class="topbar-brand" href="#" aria-label="Ir para a Home">
-        <img src="assets/img/logo.svg" alt="Light+">
-      </a>
+<header class="topbar w-full bg-[var(--top)] text-white">
+  <div class="topbar-inner">
+    <!-- LOGO fixa a 30px da esquerda (tamanho exato do Figma) -->
+    <a class="topbar-brand" href="#" aria-label="Ir para a Home">
+      <img src="assets/img/logo.svg" alt="Light+">
+    </a>
 
-      <!-- Chevron 24x24 (entre logo e busca) -->
-      <button class="topbar-toggle" aria-label="Recolher/expandir menu lateral">
+    <!-- Régua (linha) alinhada ao gutter de 268px + Chevron centralizado -->
+    <span class="topbar-ruler" aria-hidden="true"></span>
+    <button class="topbar-toggle" aria-label="Recolher/expandir menu lateral">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path fill="currentColor" d="M14.7 6.7a1 1 0 0 1 0 1.4L11.83 11l2.87 2.9a1 1 0 1 1-1.42 1.4l-3.57-3.55a1 1 0 0 1 0-1.4L13.28 6.7a1 1 0 0 1 1.42 0Z"/>
+      </svg>
+    </button>
+
+    <!-- Busca com ícone à DIREITA -->
+    <div class="topbar-search" role="search">
+      <div class="search-wrap">
+        <input type="search" placeholder="Busca" aria-label="Buscar no painel" />
+        <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.71.71l.27.28v.79l4.25 4.25a1 1 0 0 0 1.41-1.41L15.5 14Z"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Ações -->
+    <div class="topbar-actions">
+      <button class="notif" aria-label="Notificações">
+        <span class="notif__badge">9</span>
         <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path fill="currentColor" d="M14.7 6.7a1 1 0 0 1 0 1.4L11.83 11l2.87 2.9a1 1 0 1 1-1.42 1.4l-3.57-3.55a1 1 0 0 1 0-1.4L13.28 6.7a1 1 0 0 1 1.42 0Z"/>
+          <path fill="currentColor" d="M12 22a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2Zm6-6v-5a6 6 0 1 0-12 0v5l-2 2v1h16v-1l-2-2Z"/>
         </svg>
       </button>
 
-      <!-- Busca central -->
-      <div class="topbar-search" role="search">
-        <div class="search-wrap">
-          <input type="search" placeholder="Busca" aria-label="Buscar no painel" />
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.71.71l.27.28v.79l4.25 4.25a1 1 0 0 0 1.41-1.41L15.5 14Z"/>
-          </svg>
-        </div>
-      </div>
-
-      <!-- Ações à direita -->
-      <div class="topbar-actions">
-        <button class="notif" aria-label="Notificações">
-          <span class="notif__badge">9</span>
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path fill="currentColor" d="M12 22a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2Zm6-6v-5a6 6 0 1 0-12 0v5l-2 2v1h16v-1l-2-2Z"/>
-          </svg>
-        </button>
-
-        <div class="user" aria-label="Conta do usuário">
-          <img src="https://i.pravatar.cc/64" alt="Avatar" />
-          <span class="name">Adalesio Watkins</span>
-          <svg class="chev" viewBox="0 0 24 24" aria-hidden="true">
-            <path fill="currentColor" d="m7 10 5 5 5-5H7Z"/>
-          </svg>
-        </div>
+      <div class="user" aria-label="Conta do usuário">
+        <img src="https://i.pravatar.cc/64" alt="Avatar" />
+        <span class="name">Adalesio Watkins</span>
+        <svg class="chev" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="currentColor" d="m7 10 5 5 5-5H7Z"/>
+        </svg>
       </div>
     </div>
-  </header>
+  </div>
+</header>
 
   <!-- Espaço da topbar (56px) -->
   <div class="h-14"></div>
