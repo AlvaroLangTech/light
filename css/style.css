@@ -19,9 +19,9 @@
   --line:#E5E7EB;
   --line-2:#D7DBE3;
 
-  /* medidas */
-  --sidebar-w:256px;
-  --topbar-h:56px;    /* <= altura real da topbar */
+  /* medidas (alinhadas ao HTML) */
+  --topbar-h:56px;                 /* igual ao h-14 do HTML */
+  --sidebar-w:256px;               /* Figma: 256px */
   --input-h:38px;
   --container:1100px;
 
@@ -45,48 +45,42 @@ body{
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
   background:var(--bg); color:var(--text);
+  overflow-x:hidden;
 }
 img{max-width:100%;display:block}
 button{background:none;border:0;cursor:pointer}
 :focus-visible{outline:3px solid rgba(0,154,147,.28);outline-offset:2px}
-
 .muted{color:var(--muted)}
 .h1{font-size:1.25rem;line-height:1.4;color:var(--heading);font-weight:700}
 
 /* ============================================================
-   ⬆️ TOPBAR (grudada para não “pular”)
+   ⬆️ TOPBAR — fiel ao Figma
    ============================================================ */
 header.topbar{
-  position:sticky; top:0; z-index:1000;
+  position:sticky; top:0; z-index:50;
   background:var(--top); color:#fff;
   box-shadow:inset 0 -1px 0 rgba(0,0,0,.08);
 }
 .topbar-inner{
   height:var(--topbar-h);
-  display:flex;align-items:center;gap:16px;
+  display:flex; align-items:center; gap:16px;
   width:100%;
-  max-width:none;
-  /* alinha conteúdo da topbar ao grid do main (offset = 256 + 12 do Figma) */
-  padding:0 20px 0 calc(var(--sidebar-w) + 12px);
+  padding:0 20px; /* sem offset; logo colada à esquerda */
 }
 
-/* Brand */
-.topbar-brand{display:flex;align-items:center;gap:10px;font-weight:600;color:#fff;text-decoration:none}
+/* Logo (só a marca) */
+.topbar-brand{display:flex;align-items:center;color:#fff;text-decoration:none}
 .topbar-brand img{
-  width:120.65699768066406px;
-  height:58.78181838989258px;
-  object-fit:contain;
+  height:40px;              /* segura dentro da barra */
+  width:auto;               /* mantém proporção da logo */
   image-rendering:-webkit-optimize-contrast;
 }
-.topbar-brand .divider{width:1px;height:22px;background:rgba(255,255,255,.35);margin:0 8px}
-.topbar-brand .admin{font-weight:600;font-size:14px;letter-spacing:.2px;opacity:.95}
 
-/* Divisor + Chevron 24x24 */
-.topbar-divider{width:1px;height:22px;background:rgba(255,255,255,.35);margin:0 8px}
+/* Chevron 24x24 entre logo e busca */
 .topbar-toggle{
-  width:24px;height:24px;border-radius:999px;
-  background:#0D5452;border:1px solid rgba(255,255,255,.30);
-  display:grid;place-items:center;margin:0 12px;
+  width:24px; height:24px; border-radius:999px;
+  background:#0D5452; border:1px solid rgba(255,255,255,.30);
+  display:grid; place-items:center; margin-left:12px; margin-right:12px;
   box-shadow:0 1px 1px rgba(0,0,0,.08) inset;
   transition:transform .12s ease, background .12s ease, border-color .12s ease;
 }
@@ -97,7 +91,7 @@ header.topbar{
 
 /* Busca “pílula” central */
 .topbar-search{flex:1;display:flex;justify-content:center}
-.topbar-search .search-wrap{width:min(760px,100%);position:relative}
+.topbar-search .search-wrap{width:min(1160px,100%);position:relative}
 .topbar-search input{
   width:100%;height:40px;border-radius:999px;background:#fff;
   border:1px solid rgba(255,255,255,.12);
@@ -130,23 +124,24 @@ header.topbar{
 @media (min-width:1280px){.user .name{display:inline-block}}
 
 /* ============================================================
-   📐 LAYOUT — Sidebar fixa “flush” + conteúdo
+   📐 LAYOUT — Sidebar fixa flush + conteúdo
    ============================================================ */
-
-/* ⚠️ Override se o HTML ainda tiver 'sticky top-14' do Tailwind */
-.sidebar{position:fixed !important; top:var(--topbar-h) !important; left:0 !important; z-index:900;
-  width:var(--sidebar-w); height:calc(100vh - var(--topbar-h));
+.sidebar{
+  position:fixed; left:0; top:var(--topbar-h);
+  width:var(--sidebar-w);
+  height:calc(100vh - var(--topbar-h));
   background:var(--side); color:#EAF6F5;
-  padding:16px 14px; overflow-y:auto; will-change:transform;
+  padding:16px 14px; overflow-y:auto;
+  will-change:transform;
 }
 
-/* Grid raiz: no desktop NÃO reservar coluna pra sidebar (evita a faixa branca) */
+/* (Se existir alguma grid externa, não reservar coluna) */
 @media (min-width:1025px){
-  body > .relative > .grid{grid-template-columns:minmax(0,1fr) !important}
+  body > .relative > .grid{grid-template-columns:minmax(0,1fr)!important}
   body > .relative > .grid > main{margin-left:var(--sidebar-w)}
 }
 
-/* Estilo interno da sidebar */
+/* Sidebar (interno) */
 .aside-section{margin-bottom:18px}
 .aside-title{font-size:var(--fs-12);text-transform:uppercase;letter-spacing:.08em;opacity:.85;margin:10px 8px}
 .aside-link{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:#EAF6F5;text-decoration:none}
@@ -182,10 +177,8 @@ select,input[type="text"],input[type="search"]{
 }
 table{width:100%;border-collapse:collapse;font-size:var(--fs-13)}
 thead th{
-  background:#F4F4F5;
-  color:#667085;font-weight:600;
-  padding:10px 14px;text-align:left;
-  border-bottom:1px solid #E9EEF3;
+  background:#F4F4F5;color:#667085;font-weight:600;
+  padding:10px 14px;text-align:left;border-bottom:1px solid #E9EEF3;
 }
 tbody td{padding:12px 14px;border-bottom:1px solid #EEF2F6;vertical-align:middle}
 tbody tr:hover{background:#FAFBFF}
@@ -202,16 +195,13 @@ tbody tr:hover{background:#FAFBFF}
 .row-actions button:hover{background:#F3F4F6}
 
 /* ============================================================
-   🔢 PAGINAÇÃO (igual à 2ª imagem)
+   🔢 PAGINAÇÃO
    ============================================================ */
-.pagination{
-  display:flex;align-items:center;justify-content:center;gap:12px;
-  padding:14px;
-}
+.pagination{display:flex;align-items:center;justify-content:center;gap:12px;padding:14px;}
 .pagination .pages{display:flex;align-items:center;gap:8px}
 .page-btn{
   min-width:36px;height:36px;padding:0 12px;border:1px solid var(--line);
-  border-radius:10px;background:#fff;font-size:12px;color:var(--text);
+  border-radius:10px;background:#fff;font-size:12px;color:#var(--text);
   display:inline-grid;place-items:center;
 }
 .page-btn.is-current{background:#111827;color:#fff;border-color:#111827}
@@ -226,24 +216,14 @@ tbody tr:hover{background:#FAFBFF}
 .site-footer__inner{max-width:var(--container);margin:0 auto;padding:10px 18px;font-size:11.5px;color:#6B7280;text-align:left}
 
 /* ============================================================
-   📱 RESPONSIVO (vamos refinar depois)
+   📱 RESPONSIVO (refinaremos depois)
    ============================================================ */
 @media (max-width:1200px){.filters{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:1024px){
-  /* volta a sidebar pro fluxo normal e remove o deslocamento do main */
-  .sidebar{position:static !important; width:auto; height:auto; margin:0}
-  body > .relative > .grid > main{margin-left:0}
+  .sidebar{position:static;width:auto;height:auto;margin:0}
   .topbar-inner{padding:0 20px}
 }
 @media (max-width:640px){
   .filters{grid-template-columns:1fr}
   thead th,tbody td{padding:10px}
-}
-
-/* ============================================================
-   🧹 Guarda-chuva — nunca reservar coluna extra
-   ============================================================ */
-html, body { overflow-x:hidden; }
-body > .relative, body > .relative > .grid{
-  margin-left:0 !important; padding-left:0 !important;
 }

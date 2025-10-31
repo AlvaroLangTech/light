@@ -16,18 +16,15 @@
 </head>
 <body class="min-h-screen bg-[var(--bg)] text-[var(--text)] antialiased">
 
-  <!-- Topbar -->
+  <!-- ========== TOPBAR ========== -->
   <header class="topbar w-full bg-[var(--top)] text-white">
     <div class="topbar-inner">
-      <!-- Logo + Admin Center -->
+      <!-- Logo (sem “Admin Center” ao lado) -->
       <a class="topbar-brand" href="#" aria-label="Ir para a Home">
         <img src="assets/img/logo.svg" alt="Light+">
-        <span class="divider"></span>
-        <span class="admin">Admin Center</span>
       </a>
 
-      <!-- Divisor + Chevron 24x24 (conforme Figma) -->
-      <span class="topbar-divider" aria-hidden="true"></span>
+      <!-- Chevron 24x24 (entre logo e busca) -->
       <button class="topbar-toggle" aria-label="Recolher/expandir menu lateral">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path fill="currentColor" d="M14.7 6.7a1 1 0 0 1 0 1.4L11.83 11l2.87 2.9a1 1 0 1 1-1.42 1.4l-3.57-3.55a1 1 0 0 1 0-1.4L13.28 6.7a1 1 0 0 1 1.42 0Z"/>
@@ -44,7 +41,7 @@
         </div>
       </div>
 
-      <!-- Ações -->
+      <!-- Ações à direita -->
       <div class="topbar-actions">
         <button class="notif" aria-label="Notificações">
           <span class="notif__badge">9</span>
@@ -67,7 +64,7 @@
   <!-- Espaço da topbar (56px) -->
   <div class="h-14"></div>
 
-  <!-- Sidebar FIXA (não participa de grid) -->
+  <!-- ========== SIDEBAR FIXA ========== -->
   <aside class="sidebar" aria-label="Menu lateral">
     <nav class="space-y-6">
       <div>
@@ -135,8 +132,8 @@
     </nav>
   </aside>
 
-  <!-- ===== Main (deslocado 256px pela sidebar fixa) ===== -->
-  <main class="min-h-[calc(100vh-56px)] px-6 py-6">
+  <!-- ========== CONTEÚDO (deslocado 256px pela sidebar fixa) ========== -->
+  <main class="min-h-[calc(100vh-56px)] px-6 py-6 ml-[var(--sidebar-w)]">
     <div class="main-inner">
       <!-- Cabeçalho -->
       <div class="mb-6">
