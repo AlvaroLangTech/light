@@ -1,0 +1,221 @@
+/* ============================================================
+   ⚙️ TOKENS
+   ============================================================ */
+:root{
+  /* base */
+  --bg:#F6F8F9;
+  --surface:#FFFFFF;
+  --surface-2:#F3F5F8;
+
+  /* brand */
+  --top:#009A93;      /* topbar */
+  --side:#0D5452;     /* sidebar */
+  --accent:#F7A941;
+
+  /* texto/linhas */
+  --text:#0F172A;
+  --muted:#6B7785;
+  --heading:#334155;
+  --line:#E5E7EB;
+  --line-2:#D7DBE3;
+
+  /* medidas */
+  --sidebar-w:256px;
+  --input-h:38px;
+  --container:1100px;      /* largura do conteúdo central */
+
+  /* raio/sombra */
+  --radius:10px;
+  --radius-lg:12px;
+  --shadow:0 1px 2px rgba(16,24,40,.04), 0 1px 3px rgba(16,24,40,.08);
+
+  /* tipos/spacing */
+  --fs-12:.75rem; --fs-13:.8125rem; --fs-14:.875rem; --fs-16:1rem;
+  --sp-1:6px; --sp-2:10px; --sp-3:14px; --sp-4:18px; --sp-5:24px;
+}
+
+/* ============================================================
+   🧭 BASE / ACESSIBILIDADE
+   ============================================================ */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+html{color-scheme:light}
+body{
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  background:var(--bg); color:var(--text);
+}
+img{max-width:100%;display:block}
+button{background:none;border:0;cursor:pointer}
+:focus-visible{outline:3px solid rgba(0,154,147,.28);outline-offset:2px}
+
+.muted{color:var(--muted)}
+.h1{font-size:1.25rem;line-height:1.4;color:var(--heading);font-weight:700}
+
+/* ============================================================
+   ⬆️ TOPBAR
+   ============================================================ */
+header.topbar{
+  background:var(--top);color:#fff;
+  box-shadow:inset 0 -1px 0 rgba(0,0,0,.08);
+}
+.topbar-inner{
+  height:56px;
+  display:flex;align-items:center;gap:16px;
+  max-width:1408px; margin:0 auto; padding:0 20px;
+}
+
+/* Brand (logo + Admin Center) */
+.topbar-brand{display:flex;align-items:center;gap:10px;font-weight:600;color:#fff;text-decoration:none}
+.topbar-brand img{
+  width:120.65699768066406px;
+  height:58.78181838989258px;
+  object-fit:contain;
+  image-rendering:-webkit-optimize-contrast;
+  margin-left:10px;
+}
+.topbar-brand .divider{width:1px;height:22px;background:rgba(255,255,255,.35);margin:0 8px}
+.topbar-brand .admin{font-weight:600;font-size:14px;letter-spacing:.2px;opacity:.95}
+
+/* Busca “pílula” central */
+.topbar-search{flex:1;display:flex;justify-content:center}
+.topbar-search .search-wrap{width:min(760px,100%);position:relative}
+.topbar-search input{
+  width:100%;height:40px;border-radius:999px;background:#fff;
+  border:1px solid rgba(255,255,255,.12);
+  padding:0 14px 0 44px;color:var(--text);outline:none;box-shadow:none;
+}
+/* limpar elementos nativos do search no WebKit */
+.topbar-search input[type="search"]{-webkit-appearance:none;appearance:none}
+.topbar-search input::-webkit-search-decoration,
+.topbar-search input::-webkit-search-cancel-button,
+.topbar-search input::-webkit-search-results-button,
+.topbar-search input::-webkit-search-results-decoration{display:none}
+.topbar-search input::placeholder{color:#8a95a6}
+.topbar-search svg{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  width:18px;height:18px;color:#64748B;pointer-events:none;
+}
+
+/* Ações à direita */
+.topbar-actions{margin-left:auto;display:flex;align-items:center;gap:16px}
+.notif{position:relative;width:40px;height:40px;border-radius:8px;display:grid;place-items:center}
+.notif svg{width:22px;height:22px;color:#fff;opacity:.95}
+/* badge do sino isolada (não conflita com .badge da tabela) */
+.notif .notif__badge{
+  position:absolute;top:-6px;right:-4px;
+  display:inline;padding:1px 5px;font-size:10px;line-height:1;
+  border-radius:999px;background:#E11D48;color:#fff;
+}
+.user{display:flex;align-items:center;gap:8px}
+.user img{width:28px;height:28px;border-radius:999px;object-fit:cover}
+.user .name{font-weight:600;font-size:14px;display:none}
+.user .chev{width:18px;height:18px;color:#fff;opacity:.9}
+@media (min-width:1280px){.user .name{display:inline-block}}
+
+/* ============================================================
+   📐 LAYOUT (sidebar fixa + conteúdo) — FLUSH NA ESQUERDA
+   ============================================================ */
+
+/* Sidebar FIXA (encostada), elimina gap em qualquer zoom */
+.sidebar{
+  position:fixed; left:0; top:56px;
+  width:var(--sidebar-w);
+  height:calc(100vh - 56px);
+  background:var(--side); color:#EAF6F5;
+  padding:16px 14px;
+  overflow-y:auto;
+  will-change:transform; /* ajuda no scroll suave */
+}
+
+/* Conteúdo deslocado pelo width da sidebar */
+body > .relative > .grid > main{
+  margin-left:var(--sidebar-w);
+}
+
+/* (Mantemos estilos internos da sidebar) */
+.aside-section{margin-bottom:18px}
+.aside-title{font-size:var(--fs-12);text-transform:uppercase;letter-spacing:.08em;opacity:.85;margin:10px 8px}
+.aside-link{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:#EAF6F5;text-decoration:none}
+.aside-link:hover{background:rgba(255,255,255,.10)}
+.aside-link.is-active{background:rgba(255,255,255,.16)}
+
+main{padding:24px}
+.main-inner{max-width:var(--container);margin:0 auto}
+
+/* Cards de ação */
+.action-card{
+  display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);
+  border-radius:10px;padding:14px 16px;box-shadow:var(--shadow)
+}
+.action-card .icon{width:36px;height:36px;border-radius:8px;background:var(--side);display:grid;place-items:center;color:#fff}
+
+/* Filtros */
+.filters{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{font-size:var(--fs-12);color:var(--muted);margin-bottom:6px}
+select,input[type="text"],input[type="search"]{
+  height:var(--input-h);border:1px solid var(--line);border-radius:8px;background:#fff;padding:0 10px;color:var(--text)
+}
+
+/* ============================================================
+   🧾 TABELA
+   ============================================================ */
+.table{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+.table .titlebar{
+  padding:10px 14px;background:#F4F4F5;           /* alinhado ao Figma */
+  border-bottom:1px solid var(--line);
+  font-size:.78rem;text-transform:uppercase;font-weight:700;color:#6B7280
+}
+table{width:100%;border-collapse:collapse;font-size:var(--fs-13)}
+thead th{
+  background:#F4F4F5;                              /* corrigido */
+  color:#667085;font-weight:600;
+  padding:10px 14px;text-align:left;
+  border-bottom:1px solid #E9EEF3;
+}
+tbody td{padding:12px 14px;border-bottom:1px solid #EEF2F6;vertical-align:middle}
+tbody tr:hover{background:#FAFBFF}
+
+/* Badges (status) */
+.badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:11px;border:1px solid transparent}
+.badge--ativo{background:#E9FBF5;color:#0A7E55;border-color:#B9F3DF}
+.badge--rascunho{background:#FFF7D6;color:#8A6D00;border-color:#F4E2A1}
+.badge--arquivado{background:#ECEFF3;color:#4B5563;border-color:#D7DBE3}
+
+/* Ações (última coluna) */
+.row-actions{display:flex;justify-content:flex-end;gap:8px}
+.row-actions button{padding:6px 8px;border-radius:6px}
+.row-actions button:hover{background:#F3F4F6}
+
+/* ============================================================
+   🔢 PAGINAÇÃO (igual à da 2ª imagem)
+   ============================================================ */
+.pagination{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  padding:14px;
+}
+.pagination .pages{display:flex;align-items:center;gap:8px}
+.page-btn{
+  min-width:36px;height:36px;padding:0 12px;border:1px solid var(--line);
+  border-radius:10px;background:#fff;font-size:12px;color:var(--text);
+  display:inline-grid;place-items:center;
+}
+.page-btn.is-current{background:#111827;color:#fff;border-color:#111827}
+.page-btn.ghost{opacity:.7}
+.page-btn:hover{ box-shadow:0 1px 0 rgba(0,0,0,.04) inset; } /* feedback sutil */
+.page-btn.is-current:hover{ box-shadow:none; }
+.pagination .ellipsis{padding:0 4px;color:#6B7280}
+.pagination .chev{font-weight:700}
+
+/* Rodapé institucional */
+.site-footer{margin-top:16px;border-top:1px solid var(--line);background:#fff}
+.site-footer__inner{max-width:var(--container);margin:0 auto;padding:10px 18px;font-size:11.5px;color:#6B7280;text-align:left}
+
+
+
+/* ============================================================
+   🚧 GUARDA-CHUVA — zera qualquer recuo do contêiner raiz
+   ============================================================ */
+html, body { overflow-x: hidden; }
+body > .relative,
+body > .relative > .grid{ margin-left:0 !important; padding-left:0 !important; }
