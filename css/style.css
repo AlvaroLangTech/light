@@ -26,18 +26,25 @@
   --container:1100px;
 
   /* layout helpers para topbar */
-  --topbar-pad-x: 20px;                 /* padding horizontal da .topbar-inner */
-  --gutter-offset: 0px;                 /* ajuste fino (0–1px se precisar) */
-  --gutter: calc(
-    var(--sidebar-w) + 12px             /* 256 + 12 = 268 do Figma */
-    - var(--topbar-pad-x)               /* menos o padding-left (20) da .topbar-inner */
-    + var(--gutter-offset)              /* micro ajuste opcional */
-  );
-  --chev-size: 24px;                    /* tamanho real do chevron */
-  --chev-gap: 80px;                     /* folga do input depois do chevron */
+  --topbar-pad-x:20px;          /* padding ESQUERDA da .topbar-inner */
+  --topbar-pad-r:24px;          /* padding DIREITA da .topbar-inner */
+  --actions-h:32px;             /* altura do grupo de ações (231×32) */
+  --avatar:32px;                /* avatar */
+  --bell:20px;                  /* tamanho do ícone do sino */
+  --gap-actions:12px;           /* espaçamento entre itens do grupo de ações */
 
-  /* NOVO: largura máxima da busca (valor do Figma) */
-  --search-max: 678px;                 /* ajuste aqui se no Figma estiver 1288/1292 etc. */
+  --gutter-offset:0px;          /* micro ajuste */
+  --gutter:calc(
+    var(--sidebar-w) + 12px     /* 256 + 12 = 268 do Figma */
+    - var(--topbar-pad-x)       /* compensa o padding esquerdo */
+    + var(--gutter-offset)
+  );
+
+  --chev-size:24px;             /* tamanho do chevron */
+  --chev-gap:80px;              /* folga entre chevron e início da busca */
+
+  /* largura da busca conforme Figma */
+  --search-max:678px;
 
   /* raio/sombra */
   --radius:10px;
@@ -76,34 +83,34 @@ header.topbar{
 }
 
 .topbar-inner{
-  position:relative;                 /* ancora absolutos */
+  position:relative;
   height:var(--topbar-h);
   display:flex; align-items:center; gap:16px;
   width:100%;
-  padding:0 var(--topbar-pad-x);
+  padding:0 var(--topbar-pad-r) 0 var(--topbar-pad-x); /* direita 24px, esquerda 20px */
 }
 
-/* Logo igual */
+/* Logo igual ao Figma */
 .topbar-brand{ display:inline-flex; margin-left:30px; }
 .topbar-brand img{
   width:120.66px; height:58.78px; object-fit:contain;
   image-rendering:-webkit-optimize-contrast;
 }
 
-/* RÉGUA alinhada no gutter (valor inteiro) */
+/* Régua encostando no fim da coluna da sidebar */
 .topbar-ruler{
   position:absolute;
-  left:var(--gutter);                 /* 268px compensado do padding */
+  left:var(--gutter);
   top:0; height:var(--topbar-h); width:1px;
   background:rgba(255,255,255,.35);
   transform:translateZ(0);
 }
 
-/* CHEVRON: centro exatamente na régua */
+/* Chevron centralizado sobre a régua */
 .topbar-toggle{
   position:absolute;
-  left: calc(var(--gutter) - (var(--chev-size) / 2));  /* centro na régua */
-  top:50%; transform: translateY(-50%);               /* só vertical */
+  left:calc(var(--gutter) - (var(--chev-size)/2));
+  top:50%; transform:translateY(-50%);
   width:var(--chev-size); height:var(--chev-size);
   border-radius:999px;
   background:#0D5452; border:1px solid rgba(255,255,255,.30);
@@ -117,12 +124,11 @@ header.topbar{
 .topbar-toggle:focus-visible{outline:3px solid rgba(255,255,255,.45);outline-offset:2px}
 .topbar-toggle svg{width:14px;height:14px;color:#fff}
 
-/* Busca começa após o chevron (12px de raio + 16px de gap = 28px) */
-/* E agora tem largura máxima controlada por --search-max */
+/* Busca – desloca apenas pelo raio/chevron + gap, largura fixa do Figma */
 .topbar-search{
   flex:1; display:flex;
-  margin-left: calc((var(--chev-size) / 2) + var(--chev-gap)); /* 28px íntegros */
-  max-width: var(--search-max);
+  margin-left:calc((var(--chev-size)/2) + var(--chev-gap));
+  max-width:var(--search-max);
 }
 .topbar-search .search-wrap{width:100%; position:relative}
 .topbar-search input{
@@ -141,23 +147,63 @@ header.topbar{
   width:15px; height:15px; color:#575756; pointer-events:none;
 }
 
-/* Ações à direita */
+/* ============================================================
+   ▶️ AÇÕES À DIREITA (sino + perfil) — medidas do Figma
+   ============================================================ */
 .topbar-actions{
-  margin-left:auto; display:flex; align-items:center; gap:16px;
-  flex-shrink:0; /* evita comprimir ícones quando a busca está no limite */
+  margin-left:auto;
+  display:flex; align-items:center;
+  gap:var(--gap-actions);
+  height:var(--actions-h);
+  flex-shrink:0; /* não comprime quando a busca encosta no limite */
 }
-.notif{position:relative;width:40px;height:40px;border-radius:8px;display:grid;place-items:center}
-.notif svg{width:22px;height:22px;color:#fff;opacity:.95}
+
+/* Sino: container 32×32, ícone 20×20 */
+.notif{
+  position:relative;
+  width:32px; height:32px;            /* Figma */
+  border-radius:8px;
+  display:grid; place-items:center;
+}
+
+/* Badge ancorado no canto, fora 40%/40% (igual Figma) */
 .notif .notif__badge{
-  position:absolute;top:-6px;right:-4px;
-  display:inline;padding:1px 5px;font-size:10px;line-height:1;
-  border-radius:999px;background:#E11D48;color:#fff;
+  position:absolute;
+  top:0; right:0;                      /* ancora no canto do botão */
+  transform:translate(0%,0%);       /* “sai” um pouco pra fora */
+  width:16px; height:16px;             /* tamanho do círculo */
+  border-radius:999px;
+  background:#E11D48; color:#fff;
+  font-size:10px; font-weight:700;
+  line-height:18px; text-align:center; /* centraliza o número */
+  z-index:3;                           /* acima do sino */
+  box-shadow:0 0 0 2px rgba(0,0,0,0.12); /* leve contorno, opcional */
 }
-.user{display:flex;align-items:center;gap:8px}
-.user img{width:28px;height:28px;border-radius:999px;object-fit:cover}
-.user .name{font-weight:600;font-size:14px;display:none}
-.user .chev{width:18px;height:18px;color:#fff;opacity:.9}
-@media (min-width:1280px){.user .name{display:inline-block}}
+
+/* Ícone do sino: 20×20, centralizado */
+.notif svg{
+  width:24px; height:24px;
+  color:#fff; opacity:.95;
+  z-index:1;
+  pointer-events:none;
+}
+
+/* Perfil: avatar 32, nome 14, chevron 16 (alinha ao centro vertical) */
+.user{
+  display:flex; align-items:center; gap:var(--gap-actions);
+  height:var(--actions-h);
+}
+.user img{
+  width:var(--avatar); height:var(--avatar);
+  border-radius:999px; object-fit:cover;
+}
+.user .name{ font-weight:600; font-size:14px; white-space:nowrap; display:none }
+.user .chev{ width:16px; height:16px; color:#fff; opacity:.9 }
+
+/* Exibir nome a partir de 1280px (como no Figma) */
+@media (min-width:1280px){
+  .user .name{ display:inline-block }
+}
 
 /* ============================================================
    📐 LAYOUT — Sidebar fixa + conteúdo
@@ -171,7 +217,7 @@ header.topbar{
   will-change:transform;
 }
 
-/* Em desktop, a grid do app não reserva coluna para a sidebar */
+/* Em desktop, grid não reserva coluna para a sidebar */
 @media (min-width:1025px){
   body > .relative > .grid{grid-template-columns:minmax(0,1fr)!important}
   body > .relative > .grid > main{margin-left:var(--sidebar-w)}
@@ -254,17 +300,19 @@ tbody tr:hover{background:#FAFBFF}
 /* ============================================================
    📱 RESPONSIVO
    ============================================================ */
-/* Quando a viewport não comportar a largura do Figma,
-   a busca vira fluída automaticamente */
-@media (max-width: 1400px){
-  :root{ --search-max: 100%; }
+/* Se a viewport não comportar a largura fixa da busca do Figma,
+   deixamos fluída automaticamente */
+@media (max-width:1400px){
+  :root{ --search-max:100%; }
 }
 
-@media (max-width:1200px){.filters{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:1200px){
+  .filters{grid-template-columns:repeat(2,1fr)}
+}
 @media (max-width:1024px){
   .sidebar{position:static;width:auto;height:auto;margin:0}
   body > .relative > .grid > main{margin-left:0}
-  .topbar-search{ margin-left: calc(30px + var(--chev-size) + var(--chev-gap)); } /* fallback em telas médias */
+  .topbar-search{ margin-left: calc(30px + var(--chev-size) + var(--chev-gap)); }
 }
 @media (max-width:640px){
   .filters{grid-template-columns:1fr}
