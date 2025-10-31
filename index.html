@@ -27,18 +27,16 @@
       <!-- Régua (linha) alinhada ao gutter de 268px + Chevron centralizado -->
       <span class="topbar-ruler" aria-hidden="true"></span>
       <button class="topbar-toggle" aria-label="Recolher/expandir menu lateral">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path fill="currentColor" d="M14.7 6.7a1 1 0 0 1 0 1.4L11.83 11l2.87 2.9a1 1 0 1 1-1.42 1.4l-3.57-3.55a1 1 0 0 1 0-1.4L13.28 6.7a1 1 0 0 1 1.42 0Z"/>
-        </svg>
+        <!-- chevron (máscara) -->
+        <span class="i i--chev" aria-hidden="true"></span>
       </button>
 
       <!-- Busca com ícone à DIREITA -->
       <div class="topbar-search" role="search">
         <div class="search-wrap">
           <input type="search" placeholder="Busca" aria-label="Buscar no painel" />
-          <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.71.71l.27.28v.79l4.25 4.25a1 1 0 0 0 1.41-1.41L15.5 14Z"/>
-          </svg>
+          <!-- lupa (máscara) -->
+          <span class="search-icon" aria-hidden="true"></span>
         </div>
       </div>
 
@@ -70,7 +68,8 @@
     <nav class="space-y-6">
       <div>
         <div class="text-sm font-semibold uppercase/loose opacity-90 mb-3">Home</div>
-        <a class="flex items-center gap-3 px-3 py-2 rounded-md bg-white/10 hover:bg-white/15" href="#">
+        <!-- sem fundo ativo; apenas hover -->
+        <a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-white/10" href="#">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="m3 12 9-9 9 9M4.5 10.5V21h15V10.5"/>
           </svg>
@@ -142,28 +141,16 @@
         <p class="text-sm text-[var(--muted)] mt-1">Escolha uma das opções abaixo para começar</p>
       </div>
 
-      <!-- Cards de ação -->
+      <!-- Cards de ação (sem ícones agora) -->
       <section class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-        <button class="group bg-white border border-[var(--line)] rounded-lg p-4 flex items-center gap-3 hover:shadow" aria-label="Novo formulário">
-          <div class="w-10 h-10 rounded-md bg-[var(--side)] grid place-content-center">
-            <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 4v16m8-8H4"/></svg>
-          </div>
-          <div class="text-left">
-            <div class="font-medium">Novo Formulário</div>
-            <div class="text-sm text-[var(--muted)]">Crie um formulário do zero</div>
-          </div>
+        <button class="group bg-white border border-[var(--line)] rounded-lg p-4 pl-6 text-left hover:shadow" aria-label="Novo formulário">
+          <div class="font-medium">Novo Formulário</div>
+          <div class="text-sm text-[var(--muted)]">Crie um formulário do zero</div>
         </button>
 
-        <button class="group bg-white border border-[var(--line)] rounded-lg p-4 flex items-center gap-3 hover:shadow" aria-label="Criar macroprocesso">
-          <div class="w-10 h-10 rounded-md bg-[var(--side)] grid place-content-center">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h8m-8 5h16"/>
-            </svg>
-          </div>
-          <div class="text-left">
-            <div class="font-medium">Criar Macroprocesso</div>
-            <div class="text-sm text-[var(--muted)]">Organize etapas e fluxos</div>
-          </div>
+        <button class="group bg-white border border-[var(--line)] rounded-lg p-4 pl-6 text-left hover:shadow" aria-label="Criar macroprocesso">
+          <div class="font-medium">Criar Macroprocesso</div>
+          <div class="text-sm text-[var(--muted)]">Organize etapas e fluxos</div>
         </button>
       </section>
 
@@ -264,7 +251,7 @@
           </table>
         </div>
 
-        <!-- Paginação -->
+        <!-- Paginação (identica ao mock) -->
         <nav class="pagination" aria-label="Paginação">
           <button class="page-btn ghost" aria-label="Voltar">
             <span class="chev">‹</span> Voltar
@@ -274,8 +261,10 @@
             <button class="page-btn">1</button>
             <button class="page-btn is-current" aria-current="page">2</button>
             <button class="page-btn">3</button>
-            <span class="ellipsis">…</span>
+            <button class="page-btn">4</button>
+            <button class="page-btn">5</button>
             <button class="page-btn">6</button>
+            <span class="ellipsis">…</span>
           </div>
 
           <button class="page-btn" aria-label="Próximo">
@@ -283,15 +272,6 @@
           </button>
         </nav>
       </section>
-
-      <!-- Rodapé -->
-      <footer class="site-footer mt-8">
-        <div class="site-footer__inner">
-          Light Serviços de Eletricidade S/A © 2025 — Todos os direitos reservados
-          <span class="sep">|</span> Política de Privacidade
-          <span class="sep">|</span> Gestão de Cookies
-        </div>
-      </footer>
     </div>
   </main>
 

@@ -122,7 +122,6 @@ header.topbar{
 .topbar-toggle:hover{background:#0f6663;border-color:rgba(255,255,255,.45)}
 .topbar-toggle:active{transform:translateY(-50%) scale(.98)}
 .topbar-toggle:focus-visible{outline:3px solid rgba(255,255,255,.45);outline-offset:2px}
-.topbar-toggle svg{width:14px;height:14px;color:#fff}
 
 /* Busca – desloca apenas pelo raio/chevron + gap, largura fixa do Figma */
 .topbar-search{
@@ -317,4 +316,50 @@ tbody tr:hover{background:#FAFBFF}
 @media (max-width:640px){
   .filters{grid-template-columns:1fr}
   thead th,tbody td{padding:10px}
+}
+
+/* ============================================================
+   🧩 ÍCONES EXTERNOS COMO MÁSCARA (chevron e lupa)
+   - usa os PNGs que você já salvou em assets/img/icon/
+   - permite trocar a cor só mudando 'background' da máscara
+   ============================================================ */
+
+/* Utilitário base de ícone via máscara */
+.i{
+  display:block;
+  width:14px;               /* desenho do chevron no Figma */
+  height:14px;
+  background:#fff;          /* cor do ícone (chevron branco) */
+  -webkit-mask-position:center;
+  -webkit-mask-repeat:no-repeat;
+  -webkit-mask-size:contain;
+          mask-position:center;
+          mask-repeat:no-repeat;
+          mask-size:contain;
+}
+
+/* Chevron dentro do botão .topbar-toggle */
+.i--chev{
+  -webkit-mask-image:url("../assets/img/icon/chevron_left.png");
+          mask-image:url("../assets/img/icon/chevron_left.png");
+}
+
+/* Lupa à direita do input de busca */
+.search-icon{
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  width:16px;
+  height:16px;
+  background:#575756;       /* cor da lupa (cinza Figma) */
+  -webkit-mask-image:url("../assets/img/icon/search.png");
+          mask-image:url("../assets/img/icon/search.png");
+  -webkit-mask-position:center;
+  -webkit-mask-repeat:no-repeat;
+  -webkit-mask-size:contain;
+          mask-position:center;
+          mask-repeat:no-repeat;
+          mask-size:contain;
+  pointer-events:none;
 }
