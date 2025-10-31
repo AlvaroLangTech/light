@@ -20,14 +20,22 @@
   <header class="topbar w-full bg-[var(--top)] text-white">
     <div class="topbar-inner">
       <!-- Logo + Admin Center -->
-      <a class="topbar-brand" href="#">
+      <a class="topbar-brand" href="#" aria-label="Ir para a Home">
         <img src="assets/img/logo.svg" alt="Light+">
         <span class="divider"></span>
         <span class="admin">Admin Center</span>
       </a>
 
+      <!-- Divisor + Chevron 24x24 (conforme Figma) -->
+      <span class="topbar-divider" aria-hidden="true"></span>
+      <button class="topbar-toggle" aria-label="Recolher/expandir menu lateral">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="currentColor" d="M14.7 6.7a1 1 0 0 1 0 1.4L11.83 11l2.87 2.9a1 1 0 1 1-1.42 1.4l-3.57-3.55a1 1 0 0 1 0-1.4L13.28 6.7a1 1 0 0 1 1.42 0Z"/>
+        </svg>
+      </button>
+
       <!-- Busca central -->
-      <div class="topbar-search">
+      <div class="topbar-search" role="search">
         <div class="search-wrap">
           <input type="search" placeholder="Busca" aria-label="Buscar no painel" />
           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -45,7 +53,7 @@
           </svg>
         </button>
 
-        <div class="user">
+        <div class="user" aria-label="Conta do usuário">
           <img src="https://i.pravatar.cc/64" alt="Avatar" />
           <span class="name">Adalesio Watkins</span>
           <svg class="chev" viewBox="0 0 24 24" aria-hidden="true">
@@ -59,240 +67,235 @@
   <!-- Espaço da topbar (56px) -->
   <div class="h-14"></div>
 
-  <!-- ========== APP SHELL ========== -->
-  <div class="relative">
-    <div class="grid grid-cols-[var(--sidebar-w)_minmax(0,1fr)] gap-0">
+  <!-- Sidebar FIXA (não participa de grid) -->
+  <aside class="sidebar" aria-label="Menu lateral">
+    <nav class="space-y-6">
+      <div>
+        <div class="text-sm font-semibold uppercase/loose opacity-90 mb-3">Home</div>
+        <a class="flex items-center gap-3 px-3 py-2 rounded-md bg-white/10 hover:bg-white/15" href="#">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m3 12 9-9 9 9M4.5 10.5V21h15V10.5"/>
+          </svg>
+          <span class="font-semibold">Home</span>
+        </a>
+      </div>
 
-      <!-- ===== Sidebar (fixa) ===== -->
-      <aside class="sidebar sticky top-14 h-[calc(100vh-56px)] overflow-y-auto p-4">
-        <nav class="space-y-6" aria-label="Menu lateral">
-          <div>
-            <div class="text-sm font-semibold uppercase/loose opacity-90 mb-3">Home</div>
-            <a class="flex items-center gap-3 px-3 py-2 rounded-md bg-white/10 hover:bg-white/15" href="#">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m3 12 9-9 9 9M4.5 10.5V21h15V10.5"/>
-              </svg>
-              <span class="font-semibold">Home</span>
-            </a>
+      <div>
+        <div class="text-sm font-semibold uppercase/loose opacity-90 mb-3">Admin Center</div>
+        <ul class="space-y-1">
+          <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Gerenciar Equipe</a></li>
+          <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Usuários</a></li>
+          <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Grupos</a></li>
+          <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Relacionamento</a></li>
+          <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">SLA</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="text-sm font-semibold uppercase/loose opacity-90 mb-3">Comunicação</div>
+        <ul class="space-y-1">
+          <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Light News</a></li>
+          <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Light TV</a></li>
+          <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Banner</a></li>
+          <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Parcerias</a></li>
+          <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Benefícios</a></li>
+          <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Shopping</a></li>
+          <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Notificações</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="text-sm font-semibold uppercase/loose opacity-90 mb-3">Solicitações</div>
+        <ul class="space-y-1">
+          <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Criar solicitação</a></li>
+          <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Minhas solicitações</a></li>
+          <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Aprovação pendente</a></li>
+          <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Execução pendente</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="text-sm font-semibold uppercase/loose opacity-90 mb-3">Convênios</div>
+        <ul class="space-y-1">
+          <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Parceiros</a></li>
+          <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Benefícios</a></li>
+          <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Shopping</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="text-sm font-semibold uppercase/loose opacity-90 mb-3">Ajuda e Feedback</div>
+        <ul class="space-y-1">
+          <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Dúvidas e Sugestões</a></li>
+          <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Código de ética</a></li>
+          <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Canal de Denúncias</a></li>
+          <li><a class="block px-3 py-2 rounded-md hover:bg-white/10 font-bold" href="#">FAQ</a></li>
+        </ul>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- ===== Main (deslocado 256px pela sidebar fixa) ===== -->
+  <main class="min-h-[calc(100vh-56px)] px-6 py-6">
+    <div class="main-inner">
+      <!-- Cabeçalho -->
+      <div class="mb-6">
+        <h1 class="text-2xl font-semibold tracking-tight">Criar e Gerenciar Formulários</h1>
+        <p class="text-sm text-[var(--muted)] mt-1">Escolha uma das opções abaixo para começar</p>
+      </div>
+
+      <!-- Cards de ação -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+        <button class="group bg-white border border-[var(--line)] rounded-lg p-4 flex items-center gap-3 hover:shadow" aria-label="Novo formulário">
+          <div class="w-10 h-10 rounded-md bg-[var(--side)] grid place-content-center">
+            <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 4v16m8-8H4"/></svg>
           </div>
-
-          <div>
-            <div class="text-sm font-semibold uppercase/loose opacity-90 mb-3">Admin Center</div>
-            <ul class="space-y-1">
-              <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Gerenciar Equipe</a></li>
-              <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Usuários</a></li>
-              <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Grupos</a></li>
-              <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Relacionamento</a></li>
-              <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">SLA</a></li>
-            </ul>
+          <div class="text-left">
+            <div class="font-medium">Novo Formulário</div>
+            <div class="text-sm text-[var(--muted)]">Crie um formulário do zero</div>
           </div>
+        </button>
 
-          <div>
-            <div class="text-sm font-semibold uppercase/loose opacity-90 mb-3">Comunicação</div>
-            <ul class="space-y-1">
-              <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Light News</a></li>
-              <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Light TV</a></li>
-              <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Banner</a></li>
-              <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Parcerias</a></li>
-              <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Benefícios</a></li>
-              <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Shopping</a></li>
-              <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Notificações</a></li>
-            </ul>
+        <button class="group bg-white border border-[var(--line)] rounded-lg p-4 flex items-center gap-3 hover:shadow" aria-label="Criar macroprocesso">
+          <div class="w-10 h-10 rounded-md bg-[var(--side)] grid place-content-center">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h8m-8 5h16"/>
+            </svg>
           </div>
-
-          <div>
-            <div class="text-sm font-semibold uppercase/loose opacity-90 mb-3">Solicitações</div>
-            <ul class="space-y-1">
-              <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Criar solicitação</a></li>
-              <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Minhas solicitações</a></li>
-              <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Aprovação pendente</a></li>
-              <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Execução pendente</a></li>
-            </ul>
+          <div class="text-left">
+            <div class="font-medium">Criar Macroprocesso</div>
+            <div class="text-sm text-[var(--muted)]">Organize etapas e fluxos</div>
           </div>
+        </button>
+      </section>
 
-          <div>
-            <div class="text-sm font-semibold uppercase/loose opacity-90 mb-3">Convênios</div>
-            <ul class="space-y-1">
-              <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Parceiros</a></li>
-              <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Benefícios</a></li>
-              <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Shopping</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <div class="text-sm font-semibold uppercase/loose opacity-90 mb-3">Ajuda e Feedback</div>
-            <ul class="space-y-1">
-              <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Dúvidas e Sugestões</a></li>
-              <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Código de ética</a></li>
-              <li><a class="block px-3 py-2 rounded-md hover:bg-white/10" href="#">Canal de Denúncias</a></li>
-              <li><a class="block px-3 py-2 rounded-md hover:bg-white/10 font-bold" href="#">FAQ</a></li>
-            </ul>
-          </div>
-        </nav>
-      </aside>
-
-      <!-- ===== Main ===== -->
-      <main class="min-h-[calc(100vh-56px)] px-6 py-6">
-        <div class="main-inner">
-          <!-- Cabeçalho -->
-          <div class="mb-6">
-            <h1 class="text-2xl font-semibold tracking-tight">Criar e Gerenciar Formulários</h1>
-            <p class="text-sm text-[var(--muted)] mt-1">Escolha uma das opções abaixo para começar</p>
-          </div>
-
-          <!-- Cards de ação -->
-          <section class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-            <button class="group bg-white border border-[var(--line)] rounded-lg p-4 flex items-center gap-3 hover:shadow" aria-label="Novo formulário">
-              <div class="w-10 h-10 rounded-md bg-[var(--side)] grid place-content-center">
-                <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 4v16m8-8H4"/></svg>
-              </div>
-              <div class="text-left">
-                <div class="font-medium">Novo Formulário</div>
-                <div class="text-sm text-[var(--muted)]">Crie um formulário do zero</div>
-              </div>
-            </button>
-
-            <button class="group bg-white border border-[var(--line)] rounded-lg p-4 flex items-center gap-3 hover:shadow" aria-label="Criar macroprocesso">
-              <div class="w-10 h-10 rounded-md bg-[var(--side)] grid place-content-center">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h8m-8 5h16"/>
-                </svg>
-              </div>
-              <div class="text-left">
-                <div class="font-medium">Criar Macroprocesso</div>
-                <div class="text-sm text-[var(--muted)]">Organize etapas e fluxos</div>
-              </div>
-            </button>
-          </section>
-
-          <!-- Filtros (4 selects) -->
-          <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            <div>
-              <label class="block text-sm font-medium mb-1">Macroprocesso</label>
-              <select class="w-full h-10 bg-white border border-[var(--line)] rounded-md px-3 text-sm" aria-label="Macroprocesso">
-                <option>Lorem Ipsum</option><option>Facilities</option><option>Viagens</option><option>Frota e Mobilidade</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-1">Tipo</label>
-              <select class="w-full h-10 bg-white border border-[var(--line)] rounded-md px-3 text-sm" aria-label="Tipo">
-                <option>Lorem Ipsum</option><option>Solicitante</option><option>Aprovador</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-1">Status</label>
-              <select class="w-full h-10 bg-white border border-[var(--line)] rounded-md px-3 text-sm" aria-label="Status">
-                <option>Lorem Ipsum</option><option>Ativo</option><option>Rascunho</option><option>Arquivado</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-1">Ordem</label>
-              <select class="w-full h-10 bg-white border border-[var(--line)] rounded-md px-3 text-sm" aria-label="Ordenação">
-                <option>Lorem Ipsum</option><option>Mais recentes</option><option>Mais antigos</option><option>Alfabética</option>
-              </select>
-            </div>
-          </section>
-
-          <!-- Tabela -->
-          <section class="bg-white border border-[var(--line)] rounded-lg overflow-hidden">
-            <div class="px-4 py-3 text-sm font-bold uppercase bg-[#F4F4F5] border-b border-[var(--line)]">Formulários</div>
-
-            <div class="overflow-x-auto">
-              <table class="min-w-full text-sm">
-                <thead class="border-b border-[var(--line)] bg-[#F4F4F5]">
-                  <tr class="text-left">
-                    <th class="px-4 py-3 w-8"><input type="checkbox" class="accent-[var(--side)]" aria-label="Selecionar todos"></th>
-                    <th class="px-4 py-3">Nome do formulário</th>
-                    <th class="px-4 py-3">Macroprocesso</th>
-                    <th class="px-4 py-3">Tipo</th>
-                    <th class="px-4 py-3">Status</th>
-                    <th class="px-4 py-3">Abertura</th>
-                    <th class="px-4 py-3 text-right">Ações</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-[var(--line)]">
-                  <tr>
-                    <td class="px-4 py-3"><input type="checkbox" class="accent-[var(--side)]" aria-label="Selecionar linha"></td>
-                    <td class="px-4 py-3">Mobiliário Extra / Manutenção de Mobiliário</td>
-                    <td class="px-4 py-3">Facilities</td>
-                    <td class="px-4 py-3">Solicitante</td>
-                    <td class="px-4 py-3"><span class="badge badge--ativo">Ativo</span></td>
-                    <td class="px-4 py-3">12/05/2025</td>
-                    <td class="px-4 py-3">
-                      <div class="flex justify-end gap-2">
-                        <button class="px-2 py-1 rounded hover:bg-gray-100">Editar</button>
-                        <button class="px-2 py-1 rounded hover:bg-gray-100">Ver</button>
-                        <button class="px-2 py-1 rounded hover:bg-gray-100" aria-label="Mais ações">⋮</button>
-                      </div>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td class="px-4 py-3"><input type="checkbox" class="accent-[var(--side)]" aria-label="Selecionar linha"></td>
-                    <td class="px-4 py-3">Solicitação de Equipamentos</td>
-                    <td class="px-4 py-3">Facilities</td>
-                    <td class="px-4 py-3">Solicitante</td>
-                    <td class="px-4 py-3"><span class="badge badge--rascunho">Rascunho</span></td>
-                    <td class="px-4 py-3">12/05/2025</td>
-                    <td class="px-4 py-3">
-                      <div class="flex justify-end gap-2">
-                        <button class="px-2 py-1 rounded hover:bg-gray-100">Editar</button>
-                        <button class="px-2 py-1 rounded hover:bg-gray-100">Ver</button>
-                        <button class="px-2 py-1 rounded hover:bg-gray-100" aria-label="Mais ações">⋮</button>
-                      </div>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td class="px-4 py-3"><input type="checkbox" class="accent-[var(--side)]" aria-label="Selecionar linha"></td>
-                    <td class="px-4 py-3">Utilização de veículo do Pool (Marechal Floriano)</td>
-                    <td class="px-4 py-3">Frota e Mobilidade</td>
-                    <td class="px-4 py-3">Solicitante</td>
-                    <td class="px-4 py-3"><span class="badge badge--arquivado">Arquivado</span></td>
-                    <td class="px-4 py-3">12/05/2025</td>
-                    <td class="px-4 py-3">
-                      <div class="flex justify-end gap-2">
-                        <button class="px-2 py-1 rounded hover:bg-gray-100">Editar</button>
-                        <button class="px-2 py-1 rounded hover:bg-gray-100">Ver</button>
-                        <button class="px-2 py-1 rounded hover:bg-gray-100" aria-label="Mais ações">⋮</button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <!-- Paginação -->
-            <nav class="pagination" aria-label="Paginação">
-              <button class="page-btn ghost" aria-label="Voltar">
-                <span class="chev">‹</span> Voltar
-              </button>
-
-              <div class="pages">
-                <button class="page-btn">1</button>
-                <button class="page-btn is-current" aria-current="page">2</button>
-                <button class="page-btn">3</button>
-                <span class="ellipsis">…</span>
-                <button class="page-btn">6</button>
-              </div>
-
-              <button class="page-btn" aria-label="Próximo">
-                Próximo <span class="chev">›</span>
-              </button>
-            </nav>
-          </section>
-
-          <!-- Rodapé -->
-          <footer class="site-footer mt-8">
-            <div class="site-footer__inner">
-              Light Serviços de Eletricidade S/A © 2025 — Todos os direitos reservados
-              <span class="sep">|</span> Política de Privacidade
-              <span class="sep">|</span> Gestão de Cookies
-            </div>
-          </footer>
+      <!-- Filtros (4 selects) -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div>
+          <label class="block text-sm font-medium mb-1">Macroprocesso</label>
+          <select class="w-full h-10 bg-white border border-[var(--line)] rounded-md px-3 text-sm" aria-label="Macroprocesso">
+            <option>Lorem Ipsum</option><option>Facilities</option><option>Viagens</option><option>Frota e Mobilidade</option>
+          </select>
         </div>
-      </main>
+        <div>
+          <label class="block text-sm font-medium mb-1">Tipo</label>
+          <select class="w-full h-10 bg-white border border-[var(--line)] rounded-md px-3 text-sm" aria-label="Tipo">
+            <option>Lorem Ipsum</option><option>Solicitante</option><option>Aprovador</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Status</label>
+          <select class="w-full h-10 bg-white border border-[var(--line)] rounded-md px-3 text-sm" aria-label="Status">
+            <option>Lorem Ipsum</option><option>Ativo</option><option>Rascunho</option><option>Arquivado</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Ordem</label>
+          <select class="w-full h-10 bg-white border border-[var(--line)] rounded-md px-3 text-sm" aria-label="Ordenação">
+            <option>Lorem Ipsum</option><option>Mais recentes</option><option>Mais antigos</option><option>Alfabética</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Tabela -->
+      <section class="bg-white border border-[var(--line)] rounded-lg overflow-hidden">
+        <div class="px-4 py-3 text-sm font-bold uppercase bg-[#F4F4F5] border-b border-[var(--line)]">Formulários</div>
+
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-sm">
+            <thead class="border-b border-[var(--line)] bg-[#F4F4F5]">
+              <tr class="text-left">
+                <th class="px-4 py-3 w-8"><input type="checkbox" class="accent-[var(--side)]" aria-label="Selecionar todos"></th>
+                <th class="px-4 py-3">Nome do formulário</th>
+                <th class="px-4 py-3">Macroprocesso</th>
+                <th class="px-4 py-3">Tipo</th>
+                <th class="px-4 py-3">Status</th>
+                <th class="px-4 py-3">Abertura</th>
+                <th class="px-4 py-3 text-right">Ações</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-[var(--line)]">
+              <tr>
+                <td class="px-4 py-3"><input type="checkbox" class="accent-[var(--side)]" aria-label="Selecionar linha"></td>
+                <td class="px-4 py-3">Mobiliário Extra / Manutenção de Mobiliário</td>
+                <td class="px-4 py-3">Facilities</td>
+                <td class="px-4 py-3">Solicitante</td>
+                <td class="px-4 py-3"><span class="badge badge--ativo">Ativo</span></td>
+                <td class="px-4 py-3">12/05/2025</td>
+                <td class="px-4 py-3">
+                  <div class="flex justify-end gap-2">
+                    <button class="px-2 py-1 rounded hover:bg-gray-100">Editar</button>
+                    <button class="px-2 py-1 rounded hover:bg-gray-100">Ver</button>
+                    <button class="px-2 py-1 rounded hover:bg-gray-100" aria-label="Mais ações">⋮</button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-4 py-3"><input type="checkbox" class="accent-[var(--side)]" aria-label="Selecionar linha"></td>
+                <td class="px-4 py-3">Solicitação de Equipamentos</td>
+                <td class="px-4 py-3">Facilities</td>
+                <td class="px-4 py-3">Solicitante</td>
+                <td class="px-4 py-3"><span class="badge badge--rascunho">Rascunho</span></td>
+                <td class="px-4 py-3">12/05/2025</td>
+                <td class="px-4 py-3">
+                  <div class="flex justify-end gap-2">
+                    <button class="px-2 py-1 rounded hover:bg-gray-100">Editar</button>
+                    <button class="px-2 py-1 rounded hover:bg-gray-100">Ver</button>
+                    <button class="px-2 py-1 rounded hover:bg-gray-100" aria-label="Mais ações">⋮</button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-4 py-3"><input type="checkbox" class="accent-[var(--side)]" aria-label="Selecionar linha"></td>
+                <td class="px-4 py-3">Utilização de veículo do Pool (Marechal Floriano)</td>
+                <td class="px-4 py-3">Frota e Mobilidade</td>
+                <td class="px-4 py-3">Solicitante</td>
+                <td class="px-4 py-3"><span class="badge badge--arquivado">Arquivado</span></td>
+                <td class="px-4 py-3">12/05/2025</td>
+                <td class="px-4 py-3">
+                  <div class="flex justify-end gap-2">
+                    <button class="px-2 py-1 rounded hover:bg-gray-100">Editar</button>
+                    <button class="px-2 py-1 rounded hover:bg-gray-100">Ver</button>
+                    <button class="px-2 py-1 rounded hover:bg-gray-100" aria-label="Mais ações">⋮</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Paginação -->
+        <nav class="pagination" aria-label="Paginação">
+          <button class="page-btn ghost" aria-label="Voltar">
+            <span class="chev">‹</span> Voltar
+          </button>
+
+          <div class="pages">
+            <button class="page-btn">1</button>
+            <button class="page-btn is-current" aria-current="page">2</button>
+            <button class="page-btn">3</button>
+            <span class="ellipsis">…</span>
+            <button class="page-btn">6</button>
+          </div>
+
+          <button class="page-btn" aria-label="Próximo">
+            Próximo <span class="chev">›</span>
+          </button>
+        </nav>
+      </section>
+
+      <!-- Rodapé -->
+      <footer class="site-footer mt-8">
+        <div class="site-footer__inner">
+          Light Serviços de Eletricidade S/A © 2025 — Todos os direitos reservados
+          <span class="sep">|</span> Política de Privacidade
+          <span class="sep">|</span> Gestão de Cookies
+        </div>
+      </footer>
     </div>
-  </div>
+  </main>
+
 </body>
 </html>
