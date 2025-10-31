@@ -1,5 +1,5 @@
 /* ============================================================
-   ⚙️ TOKENS
+   ⚙️ TOKENS / VARS
    ============================================================ */
 :root{
   /* base */
@@ -24,6 +24,17 @@
   --sidebar-w:256px;    /* largura da sidebar */
   --input-h:38px;
   --container:1100px;
+
+/* layout helpers para topbar */
+--topbar-pad-x: 20px;                 /* padding horizontal da .topbar-inner */
+--gutter-offset: 0px;                 /* ajuste fino (0–1px se precisar) */
+--gutter: calc(
+  var(--sidebar-w) + 12px             /* 256 + 12 = 268 do Figma */
+  - var(--topbar-pad-x)               /* menos o padding-left (20) da .topbar-inner */
+  + var(--gutter-offset)              /* micro ajuste opcional */
+);
+--chev-size: 24px;                    /* tamanho real do chevron */
+--chev-gap: 16px;                     /* folga do input depois do chevron */
 
   /* raio/sombra */
   --radius:10px;
@@ -53,7 +64,7 @@ button{background:none;border:0;cursor:pointer}
 .h1{font-size:1.25rem;line-height:1.4;color:var(--heading);font-weight:700}
 
 /* ============================================================
-   ⬆️ TOPBAR — idêntica ao Figma
+   ⬆️ TOPBAR — alinhada 1:1 com o Figma (sem drift em zoom)
    ============================================================ */
 header.topbar{
   position:sticky; top:0; z-index:50;
@@ -61,71 +72,73 @@ header.topbar{
   box-shadow:inset 0 -1px 0 rgba(0,0,0,.08);
 }
 
-/* Precisamos de position:relative para ancorar logo/régua/chevron */
 .topbar-inner{
-  position:relative;
+  position:relative;                 /* ancora absolutos */
   height:var(--topbar-h);
   display:flex; align-items:center; gap:16px;
   width:100%;
-  /* 268px (gutter da régua) + 24px de respiro antes da busca */
-  padding:0 20px 0 calc(268px + 24px);
+  padding:0 var(--topbar-pad-x);
 }
 
-/* LOGO — tamanho exato e fixada a 30px da esquerda */
-.topbar-brand{
-  position:absolute; left:30px; top:50%; transform:translateY(-50%);
-  line-height:0; display:block;
-}
+/* Logo igual */
+.topbar-brand{ display:inline-flex; margin-left:30px; }
 .topbar-brand img{
-  width:120.66px;
-  height:58.78px;
-  object-fit:contain;
+  width:120.66px; height:58.78px; object-fit:contain;
   image-rendering:-webkit-optimize-contrast;
 }
 
-/* RÉGUA vertical na posição exata (x=268px) e altura 68px */
+/* RÉGUA alinhada no gutter (valor inteiro) */
 .topbar-ruler{
-  position:absolute; left:268px; top:0;
-  width:1px; height:var(--topbar-h);
+  position:absolute;
+  left:var(--gutter);                 /* 268px compensado do padding */
+  top:0; height:var(--topbar-h); width:1px;
   background:rgba(255,255,255,.35);
+  transform:translateZ(0);
 }
 
-/* Chevron (24×24) CENTRALIZADO na régua */
+/* CHEVRON: sem translate(-50%), centro cai na régua */
 .topbar-toggle{
-  position:absolute; left:268px; top:50%;
-  transform:translate(-50%,-50%);
-  width:24px; height:24px; border-radius:999px;
+  position:absolute;
+  left: calc(var(--gutter) - (var(--chev-size) / 2));  /* centro na régua */
+  top:50%; transform: translateY(-50%);               /* só vertical */
+  width:var(--chev-size); height:var(--chev-size);
+  border-radius:999px;
   background:#0D5452; border:1px solid rgba(255,255,255,.30);
   display:grid; place-items:center;
   box-shadow:0 1px 1px rgba(0,0,0,.08) inset;
   transition:transform .12s ease, background .12s ease, border-color .12s ease;
+  z-index:2;
 }
-.topbar-toggle svg{width:14px;height:14px;color:#fff}
 .topbar-toggle:hover{background:#0f6663;border-color:rgba(255,255,255,.45)}
-.topbar-toggle:active{transform:translate(-50%,-50%) scale(.98)}
+.topbar-toggle:active{transform:translateY(-50%) scale(.98)}
 .topbar-toggle:focus-visible{outline:3px solid rgba(255,255,255,.45);outline-offset:2px}
+.topbar-toggle svg{width:14px;height:14px;color:#fff}
 
-/* Busca “pílula” central — largura máx 1160px */
-.topbar-search{flex:1;display:flex;justify-content:center}
-.topbar-search .search-wrap{width:min(1160px,100%);position:relative}
+/* Input começa após o chevron (12px raio + 16px gap = 28px) */
+.topbar-search{
+  flex:1; display:flex;
+  margin-left: calc((var(--chev-size) / 2) + var(--chev-gap)); /* 28px íntegros */
+}
+.topbar-search .search-wrap{width:min(1160px,100%); position:relative}
 .topbar-search input{
   width:100%; height:40px; border-radius:999px; background:#fff;
   border:1px solid rgba(255,255,255,.12);
-  padding:0 44px 0 14px;  /* espaço para a lupa à direita */
-  color:var(--text); outline:none; box-shadow:none;
+  padding:0 44px 0 14px; color:var(--text); outline:none; box-shadow:none;
 }
-.topbar-search input[type="search"]{-webkit-appearance:none;appearance:none}
+.topbar-search input[type="search"]{-webkit-appearance:none; appearance:none}
 .topbar-search input::-webkit-search-decoration,
 .topbar-search input::-webkit-search-cancel-button,
 .topbar-search input::-webkit-search-results-button,
 .topbar-search input::-webkit-search-results-decoration{display:none}
 .topbar-search input::placeholder{color:#8a95a6}
-
-/* Lupa à DIREITA (15×15) a 12px da borda */
 .topbar-search .search-icon{
   position:absolute; right:12px; top:50%; transform:translateY(-50%);
   width:15px; height:15px; color:#575756; pointer-events:none;
 }
+
+/* Ações à direita (inalterado) */
+.topbar-actions{margin-left:auto;display:flex;align-items:center;gap:16px}
+
 
 /* Ações à direita */
 .topbar-actions{margin-left:auto;display:flex;align-items:center;gap:16px}
@@ -143,7 +156,7 @@ header.topbar{
 @media (min-width:1280px){.user .name{display:inline-block}}
 
 /* ============================================================
-   📐 LAYOUT — Sidebar fixa flush + conteúdo
+   📐 LAYOUT — Sidebar fixa + conteúdo
    ============================================================ */
 .sidebar{
   position:fixed; left:0; top:var(--topbar-h);
@@ -154,7 +167,7 @@ header.topbar{
   will-change:transform;
 }
 
-/* Em desktop, a grid do app não reserva coluna p/ a sidebar */
+/* Em desktop, a grid do app não reserva coluna para a sidebar */
 @media (min-width:1025px){
   body > .relative > .grid{grid-template-columns:minmax(0,1fr)!important}
   body > .relative > .grid > main{margin-left:var(--sidebar-w)}
@@ -235,13 +248,13 @@ tbody tr:hover{background:#FAFBFF}
 .site-footer__inner{max-width:var(--container);margin:0 auto;padding:10px 18px;font-size:11.5px;color:#6B7280;text-align:left}
 
 /* ============================================================
-   📱 RESPONSIVO (refino depois)
+   📱 RESPONSIVO
    ============================================================ */
 @media (max-width:1200px){.filters{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:1024px){
   .sidebar{position:static;width:auto;height:auto;margin:0}
   body > .relative > .grid > main{margin-left:0}
-  .topbar-inner{padding:0 20px}
+  .topbar-search{ margin-left: calc(30px + var(--chev-size) + var(--chev-gap)); } /* fallback em telas médias */
 }
 @media (max-width:640px){
   .filters{grid-template-columns:1fr}
